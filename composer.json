@@ -1,0 +1,27 @@
+{
+    "name": "nicolachoquet06250/php-lib-orm",
+    "version": "1.0.1",
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "license": "MIT",
+    "description": "module d'orm de la bibliothèque nicolachoquet06250/php-lib",
+    "authors": [
+        {
+            "name": "Nicolas Choquet",
+            "email": "nicolachoquet06250@gmail.com"
+        }
+    ],
+    "require": {
+        "nicolachoquet06250/php-lib": "^1.0",
+        "ext-pdo": "*",
+        "symfony/var-dumper": "^5.2"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpLib\\ORM\\": "lib"
+        }
+    }
+}
