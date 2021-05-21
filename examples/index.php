@@ -9,10 +9,10 @@ require __DIR__ . '/User.php';
 /*$conf = new DBConf();
 $conf->use(
 	engine: 'mysql',
-	host: 'mysql-nicolas-choquet-2.alwaysdata.net',
-	dbname: 'nicolas-choquet-2_test_orm_php_lib',
-	username: '156090',
-	password: '2669NICOLAS2107'
+	host: 'localhost',
+	dbname: 'database',
+	username: 'root',
+	password: 'root'
 );
 
 User::create();
