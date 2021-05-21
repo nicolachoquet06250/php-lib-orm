@@ -148,10 +148,7 @@ class Model implements ORMAdapter {
 		if (!empty($from)) {
 			$cmp = 0;
 			foreach ( $from as $k => $v ) {
-				$selector->where([
-					'field' => $k,
-					'value' => $v
-				]);
+				$selector->where(field: $k, value: $v);
 				if ($cmp < count($from) - 1) {
 					$selector->and();
 				}

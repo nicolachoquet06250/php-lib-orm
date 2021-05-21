@@ -42,8 +42,12 @@ class ORMSelector implements \PhpLib\ORM\interfaces\ORMSelector {
 		return $this;
 	}
 
-	public function where(array $where): \PhpLib\ORM\interfaces\ORMSelector {
-		$this->where[] = $where;
+	public function where(string $field, mixed $value, string $operation = ORMSelector::EQUAL): \PhpLib\ORM\interfaces\ORMSelector {
+		$this->where[] = [
+			'field' => $field,
+			'value' => $value,
+			'operation' => $operation
+		];
 		return $this;
 	}
 

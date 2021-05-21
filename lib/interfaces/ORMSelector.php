@@ -8,7 +8,7 @@ use PhpLib\ORM\Model;
 
 interface ORMSelector {
 	public function from(string $table): ORMSelector;
-	public function where(array $where): ORMSelector;
+	public function where(string $field, mixed $value, string $operation = '='): ORMSelector;
 	public function and(): ORMSelector;
 	public function or(): ORMSelector;
 	public function limit(int $limit): ORMSelector;
