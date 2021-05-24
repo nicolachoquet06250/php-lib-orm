@@ -10,7 +10,7 @@ interface ORMAdapter {
 
 	public function insert(): ORMInserter;
 
-	public function select(string|array $fields): ORMSelector;
+	public function select(string|array $fields = '*'): ORMSelector;
 
 	public function delete(): ORMDeleter;
 

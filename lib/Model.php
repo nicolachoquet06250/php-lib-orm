@@ -103,7 +103,7 @@ class Model implements ORMAdapter {
 				$attrs = $property->getAttributes(ORMFieldAttribute::class,ReflectionAttribute::IS_INSTANCEOF);
 				if (!empty($attrs)) {
 					foreach ($attrs as $attr) {
-						/** @var Attribute $entity */
+						/** @var ORMFieldAttribute $entity */
 						$entity = $attr->newInstance();
 						$entity->setTarget($rc->getName());
 						$entity->setProperty($property->getName());
