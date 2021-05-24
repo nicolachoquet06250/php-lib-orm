@@ -44,7 +44,7 @@ class Mysql implements ORMAdapter {
 		return new \PhpLib\ORM\actions\mysql\ORMInserter($this->connector, $this->model);
 	}
 
-	public function select(string|array $fields): ORMSelector {
+	public function select(string|array $fields = '*'): ORMSelector {
 		return new \PhpLib\ORM\actions\mysql\ORMSelector($this->connector, $fields, $this->model);
 	}
 
