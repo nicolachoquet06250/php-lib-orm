@@ -6,7 +6,6 @@ namespace PhpLib\ORM\actions\mysql;
 
 use PDO;
 use PhpLib\ORM\Model;
-use PhpLib\ORM\ORMSelector;
 
 class ORMDeleter implements \PhpLib\ORM\interfaces\ORMDeleter {
 	private string $table;
