@@ -6,19 +6,19 @@ require __DIR__ . '/../vendor/autoload.php';
 
 require __DIR__ . '/User.php';
 
-/*$conf = new DBConf();
+$conf = new DBConf();
 $conf->use(
 	engine: 'mysql',
-	host: 'localhost',
-	dbname: 'database',
-	username: 'root',
-	password: 'root'
+	host: 'mysql-nicolas-choquet-2.alwaysdata.net',
+	dbname: 'nicolas-choquet-2_test_orm_php_lib',
+	username: '156090',
+	password: '2669NICOLAS2107'
 );
 
 User::create();
 Message::create();
 
-User::find([
+/*User::find([
 	'email' => 'nchoquet@gmail.com'
 ]);
 
@@ -54,3 +54,20 @@ dump('deleted', $deleted);*/
 	->save();
 
 dump($updatedUser);*/
+$user = (new User)->select()->where('id', 2)->get();
+if (!empty($user)) {
+	$user = $user[0];
+} else {
+	$user = null;
+}
+$user?->delete()->save();
+
+$user2 = new User;
+
+$user2->firstname = 'Toto';
+$user2->lastname = 'Tata';
+$user2->email = 'ttata@test.com';
+$user2->password = 'monpassword';
+$user2->insert()->build();
+
+dump($user2);

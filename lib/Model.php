@@ -218,7 +218,7 @@ class Model implements ORMAdapter {
 	}
 
 	public function insert(): ORMInserter {
-		return $this->orm->insert();
+		return $this->orm->insert()->setModel($this);
 	}
 
 	public function select(array|string $fields = '*'): ORMSelector {
@@ -226,7 +226,7 @@ class Model implements ORMAdapter {
 	}
 
 	public function delete(): ORMDeleter {
-		return $this->orm->delete();
+		return $this->orm->delete()->setModel($this);
 	}
 
 	public function update(): ORMUpdater {

@@ -10,11 +10,17 @@ use RuntimeException;
 
 class ORMInserter implements \PhpLib\ORM\interfaces\ORMInserter {
 	private array $fields = [];
+	private ?Model $modelObj = null;
 
 	public function __construct(
 		private PDO $pdo,
 		private string $model
 	) {}
+
+	public function setModel(Model $model): ORMInserter {
+		$this->modelObj = $model;
+		return $this;
+	}
 
 	public function setAll(array $fields): ORMInserter {
 		$this->fields = array_merge($this->fields, $fields);
@@ -29,6 +35,12 @@ class ORMInserter implements \PhpLib\ORM\interfaces\ORMInserter {
 	public function build(): bool|Model {
 		/** @var Model $model */
 		$model = $this->model;
+
+		if (!is_null($this->modelObj)) {
+			foreach ($this->modelObj as $k => $v) {
+				$this->set($k, $v);
+			}
+		}
 
 		$primary_key = array_reduce(
 			array_values($model::getFields()),
@@ -58,9 +70,17 @@ class ORMInserter implements \PhpLib\ORM\interfaces\ORMInserter {
 		if ($success) {
 			$last_id = $this->pdo->lastInsertId();
 
-			return $model::find([
+			$tmpModelObj = $model::find([
 				$primary_key => $last_id
 			])[0];
+
+			if (!is_null($tmpModelObj) && !is_null($this->modelObj)) {
+				foreach ($tmpModelObj as $k => $v) {
+					$this->modelObj->$k = $v;
+				}
+				return $this->modelObj;
+			}
+			return $tmpModelObj;
 		}
 		return false;
 	}

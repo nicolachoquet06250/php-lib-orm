@@ -6,17 +6,23 @@ namespace PhpLib\ORM\actions\mysql;
 
 use PDO;
 use PhpLib\ORM\Model;
-use PhpLib\ORM\ORMSelector;
+use PhpLib\ORM\actions\mysql\ORMSelector;
 
 class ORMDeleter implements \PhpLib\ORM\interfaces\ORMDeleter {
 	private string $table;
 	private array $where = [];
+	private ?Model $modelObj = null;
 
 	public function __construct(
 		private PDO $pdo,
 		private string $model
 	) {
 		$this->from($model::getTable());
+	}
+
+	public function setModel(Model $model): ORMDeleter {
+		$this->modelObj = $model;
+		return $this;
 	}
 
 	public function from(string $table): \PhpLib\ORM\interfaces\ORMDeleter {
@@ -48,8 +54,15 @@ class ORMDeleter implements \PhpLib\ORM\interfaces\ORMDeleter {
 		$model = $this->model;
 		$request = "DELETE FROM `{$model::getTable()}`";
 
+		if (!is_null($this->modelObj)) {
+			foreach ($this->modelObj as $k => $v) {
+				$this->where($k, $v)->and();
+			}
+		}
+
 		if (!empty($this->where)) {
 			$request .= " WHERE";
+			$cmp = 0;
 			foreach ( $this->where as $where ) {
 				if ( ! empty( $where ) ) {
 					$request .= " `{$model::getTable()}`.`{$where['field']}` ";
@@ -73,10 +86,11 @@ class ORMDeleter implements \PhpLib\ORM\interfaces\ORMDeleter {
 						}
 					}
 
-					if ( isset( $where['binary_operation'] ) ) {
+					if ( isset( $where['binary_operation'] ) && $cmp < count($this->where) - 1 ) {
 						$request .= " {$where['binary_operation']}";
 					}
 				}
+				$cmp++;
 			}
 		}
 
